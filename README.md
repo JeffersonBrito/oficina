@@ -13,6 +13,8 @@ Dentro do Claude Code:
 
 Para atualizar depois: `/plugin update oficina`.
 
+Para usar no **Codex** (OpenAI), veja [Usar no Codex](#usar-no-codex).
+
 ## Skills
 
 | Skill | O que faz | Como usar |
@@ -174,6 +176,21 @@ O plugin faz cumprir, não só recomenda:
 oficina bloqueou o commit. Padrão: frase curta em inglês, capitalizada, sem prefixo, sem atribuição.
 - prefixo proibido em "feat: add brainstorming skill": use uma frase, sem "tipo:"
 ```
+
+## Usar no Codex
+
+As skills são o mesmo `SKILL.md` que o Codex lê. O que muda: o Codex procura em `~/.agents/skills`, invoca com `$nome` em vez de `/nome`, e não tem hooks, então a `usar-oficina` e os padrões da casa vão para o `~/.codex/AGENTS.md`.
+
+```bash
+git clone https://github.com/JeffersonBrito/oficina.git ~/oficina
+~/oficina/codex/install.sh
+```
+
+O script cria um link de cada skill em `~/.agents/skills/` e insere um bloco marcado no `~/.codex/AGENTS.md`, sem tocar no que já estiver lá. Rodar de novo atualiza o bloco. Depois, reiniciar o Codex e invocar com `$lapidar`, `$tdd`, `$conferir`.
+
+Para atualizar: `git -C ~/oficina pull && ~/oficina/codex/install.sh`.
+
+O que não existe no Codex: o bloqueio automático de commit fora do padrão. As regras estão no `AGENTS.md` e o `$entregar` as aplica, mas não há hook que impeça um `git commit` manual fora do padrão.
 
 ## Criar uma skill nova
 
