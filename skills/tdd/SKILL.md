@@ -50,7 +50,7 @@ Ordenar por **fatia vertical**: primeiro o caminho feliz mais fino que atravessa
 - Só com a suíte verde. Limpar duplicação, nome ruim, estrutura, no código de produção e nos testes. Sem mudar comportamento, sem adicionar comportamento.
 - Rodar a suíte de novo. Verde? Próximo item. Vermelho? Desfazer o refactor, não "consertar" adicionando código.
 
-Commit por fatia, se o projeto usa commits pequenos e o usuário pediu commits.
+Código de produção e de teste seguem clean code: nomes que dispensam comentário; comentário só para um porquê que o código não diz. Commit por fatia, se o projeto usa commits pequenos e o usuário pediu commits: uma frase curta em inglês, capitalizada, sem prefixo, sem rodapé de atribuição.
 
 ### 3. Fechar
 

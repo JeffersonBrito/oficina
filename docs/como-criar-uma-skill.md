@@ -37,6 +37,14 @@ Depois, em uma sessão do Claude Code, invoque `/nome-da-skill <pedido>` e confi
 - Um pedido pequeno gerou saída pequena?
 - Nenhuma frase proibida sobrou?
 
+## Padrões da casa
+
+Valem para o repositório da oficina e para qualquer código que as skills produzam.
+
+- **Commits:** uma frase curta em inglês, capitalizada, sem prefixo (`fix:`, `feat:`), sem rodapé de atribuição. `Add brainstorming skill`, não `feat: adiciona skill de brainstorming`.
+- **PRs:** título no mesmo formato; corpo com objetivo, o que ficou fora e como verificar. Sem rodapé de atribuição.
+- **Código:** clean code. Nome diz o que a coisa faz; comentário só quando explica um porquê que o código não consegue dizer. Comentário que repete o código é removido.
+
 ## Publicar uma nova versão
 
 1. Atualizar `version` em `.claude-plugin/plugin.json` e em `.claude-plugin/marketplace.json` (os dois).
