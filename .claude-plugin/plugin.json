@@ -1,0 +1,14 @@
+{
+  "name": "oficina",
+  "version": "0.1.0",
+  "description": "Skills pessoais do Jefferson Brito para Claude Code: transformar pedidos vagos em tasks estruturadas (lapidar) e, em breve, brainstorming e outras ferramentas de pensamento antes do código.",
+  "author": {
+    "name": "Jefferson Brito",
+    "email": "jefersonbritoalm@gmail.com",
+    "url": "https://github.com/JeffersonBrito"
+  },
+  "homepage": "https://github.com/JeffersonBrito/oficina",
+  "repository": "https://github.com/JeffersonBrito/oficina",
+  "license": "MIT",
+  "keywords": ["claude-code", "skills", "prompts", "tasks", "brainstorming", "pt-br"]
+}

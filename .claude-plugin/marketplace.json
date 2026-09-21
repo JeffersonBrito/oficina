@@ -1,0 +1,29 @@
+{
+  "name": "oficina",
+  "owner": {
+    "name": "Jefferson Brito",
+    "email": "jefersonbritoalm@gmail.com"
+  },
+  "metadata": {
+    "description": "Marketplace do plugin oficina: skills pessoais para Claude Code, em português.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "oficina",
+      "source": "./",
+      "description": "Skills pessoais do Jefferson Brito: lapidar (pedido vago vira task estruturada) e, em breve, brainstorming.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Jefferson Brito",
+        "email": "jefersonbritoalm@gmail.com"
+      },
+      "homepage": "https://github.com/JeffersonBrito/oficina",
+      "repository": "https://github.com/JeffersonBrito/oficina",
+      "license": "MIT",
+      "keywords": ["skills", "prompts", "tasks", "brainstorming", "pt-br"],
+      "category": "productivity",
+      "strict": false
+    }
+  ]
+}
