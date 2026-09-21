@@ -19,8 +19,9 @@ Para atualizar depois: `/plugin update oficina`.
 |-------|-----------|-----------|
 | **brainstorming** | Separa o problema da solução que veio junto, faz até 5 perguntas (uma por vez), propõe 3 a 5 direções materialmente diferentes com prós, contras, esforço e risco em fatos, recomenda uma e pede a escolha. A escolha sai como comando `/lapidar` pronto. | `/brainstorming <ideia ou dúvida>` |
 | **lapidar** | Pega um pedido curto e vago e devolve uma task estruturada: contexto, objetivo, escopo, critérios de aceite verificáveis, abordagem, premissas explícitas. Vale para qualquer domínio: e-mail, apresentação, análise, plano, decisão, código. | `/lapidar <pedido>` |
+| **tdd** | Implementa código com teste primeiro. Lista de testes derivada dos critérios de aceite, ciclo RED (ver falhar pelo motivo certo) → GREEN mínimo → REFACTOR, fatias verticais ponta a ponta, testes honestos. Código escrito antes do teste é apagado. Bug começa por um teste que reproduz. | `/tdd <o que implementar>` ou automático ao executar uma task com código |
 
-O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → executa.** Cada skill para onde a próxima começa.
+O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → `/tdd` implementa.** Cada skill para onde a próxima começa: os critérios de aceite do `lapidar` são a lista de testes do `tdd`.
 
 ### brainstorming
 
@@ -69,13 +70,28 @@ O que ela faz de diferente de "pedir ao modelo para melhorar o prompt":
 
 Exemplos completos de antes e depois em [`skills/lapidar/references/exemplos.md`](skills/lapidar/references/exemplos.md).
 
+### tdd
+
+```
+/tdd endpoint POST /auth/register com 409 para e-mail duplicado
+/lapidar cria o endpoint de cadastro --executar      # a execução entra no /tdd sozinha
+```
+
+Três regras que não se negociam:
+
+- **Teste antes, sempre.** Código de produção escrito antes do teste é apagado, não "guardado de referência".
+- **Fatia vertical, não camada.** Cada ciclo entrega um comportamento inteiro, da entrada ao resultado observável.
+- **Teste honesto.** Antes de fechar um item: "se eu quebrar a implementação de propósito, este teste falha?". Tabela de sinais de teste desonesto (`toBeTruthy`, asserção sobre o mock, snapshot sem ler) com a troca certa.
+
+O ciclo exige **ver o RED pelo motivo certo** (asserção que não bateu ou função que não existe; erro de sintaxe ou fixture faltando não conta) e trata teste que passa de primeira como suspeito. Vem com tabela de racionalizações, tabela de "quando travar", relatório final critério a critério, e referências de comandos para pytest, Jest e Vitest e de anti-padrões de teste.
+
 ## Criar uma skill nova
 
 Veja [`docs/como-criar-uma-skill.md`](docs/como-criar-uma-skill.md) e o modelo em [`templates/SKILL-template.md`](templates/SKILL-template.md).
 
 ## Inspiração
 
-A ideia de skills como processos de pensamento vem do [Superpowers](https://github.com/obra/superpowers). A oficina é uma coleção própria, em português, com foco em tasks e não só em código.
+A ideia de skills como processos de pensamento vem do [Superpowers](https://github.com/obra/superpowers), e o rigor do `tdd` (ver o teste falhar, apagar código escrito antes do teste) vem da skill de TDD de lá. A fatia vertical e os testes honestos vêm da skill de TDD do [Matt Pocock](https://www.aihero.dev/skill-test-driven-development-claude-code). A oficina é uma coleção própria, em português, com foco em tasks e não só em código.
 
 ## Licença
 

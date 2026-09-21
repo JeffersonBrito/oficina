@@ -45,4 +45,4 @@ Depois, em uma sessão do Claude Code, invoque `/nome-da-skill <pedido>` e confi
 
 ## Como as skills se encadeiam
 
-`brainstorming` termina em um comando `/lapidar`; `lapidar` termina em uma task pronta para executar. Skill nova deve dizer onde entra nessa cadeia e onde para, na seção "O que esta skill NÃO faz".
+`brainstorming` termina em um comando `/lapidar`; `lapidar` termina em uma task pronta para executar; `tdd` pega os critérios de aceite dessa task como lista de testes e termina em código com relatório critério a critério. Skill nova deve dizer onde entra nessa cadeia e onde para, na seção "O que esta skill NÃO faz".

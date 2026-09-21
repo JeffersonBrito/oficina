@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Marketplace do plugin oficina: skills pessoais para Claude Code, em português.",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {
       "name": "oficina",
       "source": "./",
-      "description": "Skills pessoais do Jefferson Brito: brainstorming (explorar direções antes de decidir) e lapidar (pedido vago vira task estruturada).",
-      "version": "0.2.0",
+      "description": "Skills pessoais do Jefferson Brito: brainstorming (explorar direções antes de decidir), lapidar (pedido vago vira task estruturada) e tdd (implementar com teste primeiro, fatia vertical e testes honestos).",
+      "version": "0.3.0",
       "author": {
         "name": "Jefferson Brito",
         "email": "jefersonbritoalm@gmail.com"
