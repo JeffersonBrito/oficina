@@ -1,6 +1,6 @@
 {
   "name": "oficina",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Skills pessoais do Jefferson Brito para Claude Code, em português. A cadeia completa de uma task: brainstorming, lapidar, depurar, tdd, conferir, entregar e registrar, mais usar-oficina injetada em toda sessão e hooks que fazem cumprir o padrão de commits e PRs.",
   "author": {
     "name": "Jefferson Brito",

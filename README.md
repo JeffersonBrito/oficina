@@ -179,18 +179,28 @@ oficina bloqueou o commit. Padrão: frase curta em inglês, capitalizada, sem pr
 
 ## Usar no Codex
 
-As skills são o mesmo `SKILL.md` que o Codex lê. O que muda: o Codex procura em `~/.agents/skills`, invoca com `$nome` em vez de `/nome`, e não tem hooks, então a `usar-oficina` e os padrões da casa vão para o `~/.codex/AGENTS.md`.
+A oficina é também um plugin do Codex, no mesmo formato que o Superpowers usa lá: manifesto em `.codex-plugin/plugin.json`, marketplace em `.agents/plugins/marketplace.json`, as mesmas skills e os mesmos hooks. O Codex suporta `SessionStart` e `PreToolUse` nativamente, então a `usar-oficina`, os padrões da casa e o bloqueio de commit fora do padrão funcionam igual.
+
+**Pelo repositório** (precisa de acesso ao repo e git autenticado na máquina). No `~/.codex/config.toml`:
+
+```toml
+[marketplaces.oficina]
+source = "https://github.com/JeffersonBrito/oficina.git"
+source_type = "git"
+```
+
+Depois, no Codex: `/plugins`, aba **Oficina**, instalar. Reiniciar o Codex.
+
+**Por um clone local** (sem mexer no `config.toml`):
 
 ```bash
 git clone https://github.com/JeffersonBrito/oficina.git ~/oficina
 ~/oficina/codex/install.sh
 ```
 
-O script cria um link de cada skill em `~/.agents/skills/` e insere um bloco marcado no `~/.codex/AGENTS.md`, sem tocar no que já estiver lá. Rodar de novo atualiza o bloco. Depois, reiniciar o Codex e invocar com `$lapidar`, `$tdd`, `$conferir`.
+O script cria o link `~/plugins/oficina` e adiciona a oficina ao marketplace pessoal em `~/.agents/plugins/marketplace.json`, preservando o que já estiver lá. Depois: `/plugins`, aba do marketplace local, instalar, reiniciar.
 
-Para atualizar: `git -C ~/oficina pull && ~/oficina/codex/install.sh`.
-
-O que não existe no Codex: o bloqueio automático de commit fora do padrão. As regras estão no `AGENTS.md` e o `$entregar` as aplica, mas não há hook que impeça um `git commit` manual fora do padrão.
+Nos dois casos as skills são invocadas com `$lapidar`, `$tdd`, `$conferir` (o Codex usa `$` em vez de `/`). Para atualizar: `git pull` no clone, ou reinstalar pelo `/plugins` quando a versão subir.
 
 ## Criar uma skill nova
 

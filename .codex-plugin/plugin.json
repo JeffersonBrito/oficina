@@ -1,0 +1,28 @@
+{
+  "name": "oficina",
+  "version": "1.1.0",
+  "description": "Skills pessoais do Jefferson Brito, em português. A cadeia completa de uma task: brainstorming, lapidar, depurar, tdd, conferir, entregar e registrar, mais usar-oficina injetada em toda sessão e hooks que fazem cumprir o padrão de commits e PRs.",
+  "author": {
+    "name": "Jefferson Brito",
+    "email": "jefersonbritoalm@gmail.com",
+    "url": "https://github.com/JeffersonBrito"
+  },
+  "homepage": "https://github.com/JeffersonBrito/oficina",
+  "repository": "https://github.com/JeffersonBrito/oficina",
+  "license": "MIT",
+  "keywords": ["skills", "prompts", "tasks", "brainstorming", "tdd", "debugging", "pt-br"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Oficina",
+    "shortDescription": "Pensar, especificar, implementar e provar uma task",
+    "longDescription": "Use a oficina para levar um pedido vago até uma entrega provada: brainstorming explora direções, lapidar escreve a task com critérios de aceite, depurar acha a causa raiz, tdd implementa com teste primeiro, conferir prova cada critério, entregar commita e abre o PR no padrão da casa, registrar guarda o não-óbvio.",
+    "developerName": "Jefferson Brito",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "defaultPrompt": [
+      "Quero pensar em como resolver um problema antes de escrever a task.",
+      "Transforma esse pedido em uma task com critérios de aceite."
+    ],
+    "websiteURL": "https://github.com/JeffersonBrito/oficina"
+  }
+}
