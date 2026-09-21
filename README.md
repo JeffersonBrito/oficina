@@ -22,8 +22,11 @@ Para atualizar depois: `/plugin update oficina`.
 | **tdd** | Implementa código com teste primeiro. Lista de testes derivada dos critérios de aceite, ciclo RED (ver falhar pelo motivo certo) → GREEN mínimo → REFACTOR, fatias verticais ponta a ponta, testes honestos. Código escrito antes do teste é apagado. Bug começa por um teste que reproduz. | `/tdd <o que implementar>` ou automático ao executar uma task com código |
 | **conferir** | Prova que a entrega está pronta antes de dizer "pronto". Cada critério de aceite recebe evidência produzida na hora (comando e saída, trecho, contagem); reporta passou / falhou / não conferido sem arredondar; veredito binário PRONTO ou NÃO PRONTO. Vale para código, texto, apresentação, dados. | `/conferir` ou automático antes de concluir |
 | **depurar** | Investiga um bug até a causa raiz antes de corrigir. Congela o sintoma com evidência literal, reproduz, localiza por bissecção (tempo, caminho, dados), testa até 3 hipóteses com previsão, explica a causa em uma frase sem "acho", corrige pelo `tdd` e procura irmãos do bug. | `/depurar <sintoma>` ou automático em task `corrigir` |
+| **entregar** | Fecha o trabalho em código: exige PRONTO do `conferir`, lê o diff como revisor, commits em inglês sem prefixo e sem atribuição, PR com objetivo, o que ficou fora e como verificar. | `/entregar`, `--push`, `--pr` |
+| **registrar** | No fim da task, grava o não-óbvio onde a próxima sessão encontra: memória (usuário e projetos), `CLAUDE.md` (uma linha) ou `docs/decisions/`. Teste dos três meses: se não evita um erro ou uma pergunta, não registra. | `/registrar` |
+| **usar-oficina** | Meta-skill: qual skill usar em cada situação e em que ordem. Injetada em toda sessão pelo hook. | automática |
 
-O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → `/tdd` implementa → `/conferir` prova.** Para bug, a task `corrigir` do `lapidar` passa pelo **`/depurar`** antes do `tdd`. Cada skill para onde a próxima começa: os critérios de aceite do `lapidar` são a lista de testes do `tdd` e a lista de provas do `conferir`.
+O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → `/tdd` implementa → `/conferir` prova → `/entregar` commita e abre o PR → `/registrar` guarda o não-óbvio.** Para bug, a task `corrigir` do `lapidar` passa pelo **`/depurar`** antes do `tdd`. A `usar-oficina` é injetada em toda sessão e decide por onde o pedido entra. Cada skill para onde a próxima começa: os critérios de aceite do `lapidar` são a lista de testes do `tdd` e a lista de provas do `conferir`.
 
 ### brainstorming
 
@@ -128,6 +131,34 @@ O que a diferencia de "tenta mudar e vê":
 - **Causa raiz sem "acho"**, mais "por que não foi pego antes". `try/except`, `retry` e `sleep` sem causa por trás não são correção.
 - **Irmãos do bug**: o mesmo padrão em outro lugar é corrigido junto ou registrado.
 
+### entregar
+
+```
+/entregar
+/entregar --pr
+```
+
+| Flag | Efeito |
+|------|--------|
+| (nenhuma) | Confere, revisa o diff e commita. Sem push. |
+| `--push` | Também faz push da branch |
+| `--pr` | Push e PR; mostra título e corpo e pede confirmação uma vez |
+
+Exige veredito PRONTO do `conferir` (roda se não houver). `git status` lido inteiro: arquivo sem motivo na task fica de fora. Diff lido como revisor: exploração, `print`, comentário redundante e mudança fora do escopo saem antes do commit. Um commit por mudança que faz sentido sozinha. PR pelo modelo em `references/pr.md`: Why, What changed, Out of scope, How to verify. Nunca force push em branch compartilhada.
+
+### registrar
+
+```
+/registrar
+/registrar --projeto
+```
+
+Colhe candidatos da task que acabou (decisões, armadilhas, convenções descobertas, premissas erradas, feedback do usuário), filtra pelo teste dos três meses, e grava cada um em um lugar só: memória para o que é sobre o usuário e seus projetos, `CLAUDE.md` em uma linha para o que qualquer sessão no repo precisa saber, `docs/decisions/` para decisão com alternativas descartadas. Não registra o que o código ou o git já contam. Exemplos de "registra" e "não registra" em `references/exemplos.md`.
+
+### usar-oficina
+
+Injetada no início de toda sessão pelo hook `SessionStart`, junto com os padrões da casa. Tabela pedido → skill, ordem quando mais de uma se aplica, quando não usar nenhuma, e sinais de que está pulando etapa. É o que faz a cadeia rodar sem você lembrar de invocar.
+
 ## Padrões da casa
 
 Commits em inglês, frase curta capitalizada, sem prefixo, sem rodapé de atribuição. PRs no mesmo formato. Código sem comentários que repetem o código. Tudo em [`docs/padroes.md`](docs/padroes.md).
@@ -136,7 +167,7 @@ O plugin faz cumprir, não só recomenda:
 
 | Hook | O que faz |
 |------|-----------|
-| `SessionStart` | Injeta `docs/padroes.md` no contexto de toda sessão |
+| `SessionStart` | Injeta `skills/usar-oficina/SKILL.md` e `docs/padroes.md` no contexto de toda sessão |
 | `PreToolUse` (Bash) | Bloqueia `git commit` e `gh pr create/edit` com prefixo, minúscula inicial, mais de 72 caracteres, português ou rodapé de atribuição, e explica o motivo. Testes em `hooks/test_check_commit.py` |
 
 ```
