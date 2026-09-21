@@ -21,8 +21,9 @@ Para atualizar depois: `/plugin update oficina`.
 | **lapidar** | Pega um pedido curto e vago e devolve uma task estruturada: contexto, objetivo, escopo, critérios de aceite verificáveis, abordagem, premissas explícitas. Vale para qualquer domínio: e-mail, apresentação, análise, plano, decisão, código. | `/lapidar <pedido>` |
 | **tdd** | Implementa código com teste primeiro. Lista de testes derivada dos critérios de aceite, ciclo RED (ver falhar pelo motivo certo) → GREEN mínimo → REFACTOR, fatias verticais ponta a ponta, testes honestos. Código escrito antes do teste é apagado. Bug começa por um teste que reproduz. | `/tdd <o que implementar>` ou automático ao executar uma task com código |
 | **conferir** | Prova que a entrega está pronta antes de dizer "pronto". Cada critério de aceite recebe evidência produzida na hora (comando e saída, trecho, contagem); reporta passou / falhou / não conferido sem arredondar; veredito binário PRONTO ou NÃO PRONTO. Vale para código, texto, apresentação, dados. | `/conferir` ou automático antes de concluir |
+| **depurar** | Investiga um bug até a causa raiz antes de corrigir. Congela o sintoma com evidência literal, reproduz, localiza por bissecção (tempo, caminho, dados), testa até 3 hipóteses com previsão, explica a causa em uma frase sem "acho", corrige pelo `tdd` e procura irmãos do bug. | `/depurar <sintoma>` ou automático em task `corrigir` |
 
-O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → `/tdd` implementa → `/conferir` prova.** Cada skill para onde a próxima começa: os critérios de aceite do `lapidar` são a lista de testes do `tdd` e a lista de provas do `conferir`.
+O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → `/tdd` implementa → `/conferir` prova.** Para bug, a task `corrigir` do `lapidar` passa pelo **`/depurar`** antes do `tdd`. Cada skill para onde a próxima começa: os critérios de aceite do `lapidar` são a lista de testes do `tdd` e a lista de provas do `conferir`.
 
 ### brainstorming
 
@@ -105,6 +106,27 @@ O que a diferencia de "revisa aí":
 - **Critérios implícitos.** Escopo íntegro (diff lido inteiro), nada pela metade, nada deixado para trás, padrões da casa. Tabela por tipo de entrega em `references/checagens.md`.
 - **Veredito binário.** PRONTO ou NÃO PRONTO com o que falta. Sem "quase", sem "com ressalvas".
 - **Evidência independente do `tdd`.** O exemplo em `references/exemplos.md` mostra uma suíte verde com teste desonesto que só a chamada real pegou.
+
+### depurar
+
+```
+/depurar o benchmark tá dando valor diferente do gabarito nos processos escaneados
+/depurar POST /auth/register devolve 500 em vez de 409 --so-causa
+```
+
+| Flag | Efeito |
+|------|--------|
+| (nenhuma) | Investiga até a causa raiz e corrige pelo `tdd` |
+| `--so-causa` | Para na causa raiz, sem corrigir |
+
+O que a diferencia de "tenta mudar e vê":
+
+- **Uma mudança por vez, com previsão antes.** "Se X for a causa, então Y aparece." Mudou três coisas e passou? Desfaz duas.
+- **Reproduzir antes de qualquer hipótese.** Não reproduz? A task vira "obter reprodução".
+- **Bissecção** no tempo (`git bisect`), no caminho (estado no meio) e nos dados (menor input que reproduz). Técnicas e depuradores por linguagem em `references/tecnicas.md`.
+- **Três hipóteses descartadas = parar** e listar as certezas não conferidas. Uma delas está errada.
+- **Causa raiz sem "acho"**, mais "por que não foi pego antes". `try/except`, `retry` e `sleep` sem causa por trás não são correção.
+- **Irmãos do bug**: o mesmo padrão em outro lugar é corrigido junto ou registrado.
 
 ## Padrões da casa
 
