@@ -85,6 +85,22 @@ Três regras que não se negociam:
 
 O ciclo exige **ver o RED pelo motivo certo** (asserção que não bateu ou função que não existe; erro de sintaxe ou fixture faltando não conta) e trata teste que passa de primeira como suspeito. Vem com tabela de racionalizações, tabela de "quando travar", relatório final critério a critério, e referências de comandos para pytest, Jest e Vitest e de anti-padrões de teste.
 
+## Padrões da casa
+
+Commits em inglês, frase curta capitalizada, sem prefixo, sem rodapé de atribuição. PRs no mesmo formato. Código sem comentários que repetem o código. Tudo em [`docs/padroes.md`](docs/padroes.md).
+
+O plugin faz cumprir, não só recomenda:
+
+| Hook | O que faz |
+|------|-----------|
+| `SessionStart` | Injeta `docs/padroes.md` no contexto de toda sessão |
+| `PreToolUse` (Bash) | Bloqueia `git commit` e `gh pr create/edit` com prefixo, minúscula inicial, mais de 72 caracteres, português ou rodapé de atribuição, e explica o motivo |
+
+```
+oficina bloqueou o commit. Padrão: frase curta em inglês, capitalizada, sem prefixo, sem atribuição.
+- prefixo proibido em "feat: add brainstorming skill": use uma frase, sem "tipo:"
+```
+
 ## Criar uma skill nova
 
 Veja [`docs/como-criar-uma-skill.md`](docs/como-criar-uma-skill.md) e o modelo em [`templates/SKILL-template.md`](templates/SKILL-template.md).

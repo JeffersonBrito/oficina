@@ -39,11 +39,7 @@ Depois, em uma sessão do Claude Code, invoque `/nome-da-skill <pedido>` e confi
 
 ## Padrões da casa
 
-Valem para o repositório da oficina e para qualquer código que as skills produzam.
-
-- **Commits:** uma frase curta em inglês, capitalizada, sem prefixo (`fix:`, `feat:`), sem rodapé de atribuição. `Add brainstorming skill`, não `feat: adiciona skill de brainstorming`.
-- **PRs:** título no mesmo formato; corpo com objetivo, o que ficou fora e como verificar. Sem rodapé de atribuição.
-- **Código:** clean code. Nome diz o que a coisa faz; comentário só quando explica um porquê que o código não consegue dizer. Comentário que repete o código é removido.
+Em [`padroes.md`](padroes.md). O hook `SessionStart` injeta o arquivo em toda sessão e o `PreToolUse` bloqueia commits e PRs fora do padrão, então editar aquele arquivo muda o comportamento do plugin inteiro.
 
 ## Publicar uma nova versão
 
