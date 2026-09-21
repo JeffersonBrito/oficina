@@ -17,7 +17,33 @@ Para atualizar depois: `/plugin update oficina`.
 
 | Skill | O que faz | Como usar |
 |-------|-----------|-----------|
+| **brainstorming** | Separa o problema da solução que veio junto, faz até 5 perguntas (uma por vez), propõe 3 a 5 direções materialmente diferentes com prós, contras, esforço e risco em fatos, recomenda uma e pede a escolha. A escolha sai como comando `/lapidar` pronto. | `/brainstorming <ideia ou dúvida>` |
 | **lapidar** | Pega um pedido curto e vago e devolve uma task estruturada: contexto, objetivo, escopo, critérios de aceite verificáveis, abordagem, premissas explícitas. Vale para qualquer domínio: e-mail, apresentação, análise, plano, decisão, código. | `/lapidar <pedido>` |
+
+O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → executa.** Cada skill para onde a próxima começa.
+
+### brainstorming
+
+```
+/brainstorming quero colocar um chatbot no sistema pra responder as dúvidas dos analistas
+/brainstorming não sei se aviso o cliente por e-mail ou ligo --lapidar
+```
+
+| Flag | Efeito |
+|------|--------|
+| (nenhuma) | Conduz o brainstorm e entrega o resumo da direção escolhida, terminando no comando `/lapidar` |
+| `--salvar` | Também grava o resumo em `.claude/brainstorms/AAAA-MM-DD-<slug>.md` |
+| `--lapidar` | Depois da escolha, chama o `/lapidar` na sequência |
+
+Regras que a diferenciam de "me dá umas ideias":
+
+- **Problema antes da solução.** "Quero um chatbot" é solução; a skill escreve o problema ("analistas param para tirar dúvida com a mesma pessoa") e o chatbot vira uma direção entre outras.
+- **Direções materialmente diferentes.** Teste: cada uma viraria uma task diferente no `/lapidar`? Sempre inclui a mínima (ou "não fazer nada") e uma que muda o ângulo (quem, onde, quando) em vez do como.
+- **Uma pergunta por vez, no máximo cinco.** Só perguntas cuja resposta elimina uma direção.
+- **Prós e contras em fatos.** "Exige Redis, que o projeto não tem", não "mais complexo".
+- **Recomenda e diz quando outra venceria.** Depois pergunta qual. Não decide sozinha, não executa nada.
+
+Exemplos completos em [`skills/brainstorming/references/exemplos.md`](skills/brainstorming/references/exemplos.md).
 
 ### lapidar
 
@@ -42,10 +68,6 @@ O que ela faz de diferente de "pedir ao modelo para melhorar o prompt":
 - **Frases proibidas**: "boas práticas", "de forma clara e objetiva", "o público-alvo", "se necessário" são barradas pelo checklist e trocadas pela decisão concreta.
 
 Exemplos completos de antes e depois em [`skills/lapidar/references/exemplos.md`](skills/lapidar/references/exemplos.md).
-
-## Em breve
-
-- **brainstorming**: explorar o problema e as alternativas antes de lapidar. Saída: 2 a 4 direções com prós e contras e uma recomendação, que vira entrada do `/lapidar`.
 
 ## Criar uma skill nova
 

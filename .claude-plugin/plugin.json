@@ -1,7 +1,7 @@
 {
   "name": "oficina",
-  "version": "0.1.0",
-  "description": "Skills pessoais do Jefferson Brito para Claude Code: transformar pedidos vagos em tasks estruturadas (lapidar) e, em breve, brainstorming e outras ferramentas de pensamento antes do código.",
+  "version": "0.2.0",
+  "description": "Skills pessoais do Jefferson Brito para Claude Code: brainstorming (explorar direções antes de decidir) e lapidar (pedido vago vira task estruturada). Ferramentas de pensamento antes do código.",
   "author": {
     "name": "Jefferson Brito",
     "email": "jefersonbritoalm@gmail.com",

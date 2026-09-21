@@ -43,6 +43,6 @@ Depois, em uma sessão do Claude Code, invoque `/nome-da-skill <pedido>` e confi
 2. Adicionar a skill na tabela do `README.md`.
 3. Commit e push. Quem instalou pelo marketplace atualiza com `/plugin update oficina`.
 
-## Próximas skills planejadas
+## Como as skills se encadeiam
 
-- `brainstorming`: explorar o problema e as alternativas **antes** de lapidar. Saída: 2 a 4 direções com prós e contras e uma recomendação, que vira entrada do `/lapidar`.
+`brainstorming` termina em um comando `/lapidar`; `lapidar` termina em uma task pronta para executar. Skill nova deve dizer onde entra nessa cadeia e onde para, na seção "O que esta skill NÃO faz".
