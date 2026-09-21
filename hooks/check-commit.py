@@ -10,8 +10,14 @@ PORTUGUESE = re.compile(
     r"|melhora|melhorar|refatora|refatorar|altera|alterar|muda|mudar|da|das|dos|para|sem|nova|novo)\b",
     re.I,
 )
-MESSAGE_FLAG = re.compile(r"(?:-m|--message)(?:=|\s+)(?:\"([^\"]*)\"|'([^']*)'|(\S+))", re.S)
-TITLE_FLAG = re.compile(r"(?:-t|--title)(?:=|\s+)(?:\"([^\"]*)\"|'([^']*)'|(\S+))", re.S)
+QUOTED = r"(?:\"([^\"]*)\"|'([^']*)'|(\S+))"
+MESSAGE_FLAG = re.compile(r"(?:-m|--message)(?:=|\s+)" + QUOTED, re.S)
+TITLE_FLAG = re.compile(r"(?:-t|--title)(?:=|\s+)" + QUOTED, re.S)
+BODY_FLAG = re.compile(r"(?:-b|--body)(?:=|\s+)" + QUOTED, re.S)
+FED_HEREDOC = re.compile(
+    r"(?:-m|--message|-b|--body|-F|--file|--body-file)(?:=|\s+)(?:\"?\$\(cat\s+|-\s+)?<<-?\s*['\"]?(\w+)['\"]?\n(.*?)\n\s*\1\b",
+    re.S,
+)
 
 
 def read_command():
@@ -30,11 +36,23 @@ def is_pr(command):
     return re.search(r"\bgh\s+pr\s+(create|edit)\b", command) is not None
 
 
-def first_match(pattern, text):
-    match = pattern.search(text)
-    if not match:
-        return None
-    return next(group for group in match.groups() if group is not None)
+def values(pattern, text):
+    return [next(g for g in m.groups() if g is not None) for m in pattern.finditer(text)]
+
+
+def message_texts(command):
+    texts = values(MESSAGE_FLAG, command) + values(TITLE_FLAG, command) + values(BODY_FLAG, command)
+    texts += [body for _, body in FED_HEREDOC.findall(command)]
+    return texts
+
+
+def title_of(command):
+    pattern = MESSAGE_FLAG if is_commit(command) else TITLE_FLAG
+    found = values(pattern, command)
+    if found:
+        return found[0]
+    heredocs = FED_HEREDOC.findall(command)
+    return heredocs[0][1] if heredocs else None
 
 
 def title_problems(title):
@@ -47,7 +65,7 @@ def title_problems(title):
     if first_line[0].islower():
         problems.append(f'"{first_line}" precisa começar com maiúscula')
     if len(first_line) > 72:
-        problems.append(f'título com {len(first_line)} caracteres; máximo 72')
+        problems.append(f"título com {len(first_line)} caracteres; máximo 72")
     if PORTUGUESE.search(first_line):
         problems.append(f'"{first_line}" parece português; commits e PRs são em inglês')
     return problems
@@ -58,9 +76,9 @@ def main():
     if not (is_commit(command) or is_pr(command)):
         return
     problems = []
-    if ATTRIBUTION.search(command):
+    if any(ATTRIBUTION.search(text) for text in message_texts(command)):
         problems.append("rodapé de atribuição (Co-Authored-By, Generated with, Claude) é proibido")
-    title = first_match(MESSAGE_FLAG if is_commit(command) else TITLE_FLAG, command)
+    title = title_of(command)
     if title:
         problems.extend(title_problems(title))
     if not problems:
