@@ -1,7 +1,7 @@
 {
   "name": "oficina",
-  "version": "0.4.0",
-  "description": "Skills pessoais do Jefferson Brito para Claude Code: brainstorming (explorar direções antes de decidir), lapidar (pedido vago vira task estruturada) e tdd (implementar com teste primeiro, fatia vertical e testes honestos). Ferramentas de pensamento antes do código.",
+  "version": "0.5.0",
+  "description": "Skills pessoais do Jefferson Brito para Claude Code: brainstorming (explorar direções antes de decidir), lapidar (pedido vago vira task estruturada), tdd (implementar com teste primeiro, fatia vertical e testes honestos) e conferir (provar que está pronto antes de dizer pronto). Ferramentas de pensamento antes do código.",
   "author": {
     "name": "Jefferson Brito",
     "email": "jefersonbritoalm@gmail.com",

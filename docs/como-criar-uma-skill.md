@@ -49,4 +49,4 @@ Em [`padroes.md`](padroes.md). O hook `SessionStart` injeta o arquivo em toda se
 
 ## Como as skills se encadeiam
 
-`brainstorming` termina em um comando `/lapidar`; `lapidar` termina em uma task pronta para executar; `tdd` pega os critérios de aceite dessa task como lista de testes e termina em código com relatório critério a critério. Skill nova deve dizer onde entra nessa cadeia e onde para, na seção "O que esta skill NÃO faz".
+`brainstorming` termina em um comando `/lapidar`; `lapidar` termina em uma task pronta para executar; `tdd` pega os critérios de aceite dessa task como lista de testes e termina em código com relatório critério a critério; `conferir` prova cada critério com evidência independente e termina em PRONTO ou NÃO PRONTO. Skill nova deve dizer onde entra nessa cadeia e onde para, na seção "O que esta skill NÃO faz".

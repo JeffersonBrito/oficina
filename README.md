@@ -20,8 +20,9 @@ Para atualizar depois: `/plugin update oficina`.
 | **brainstorming** | Separa o problema da solução que veio junto, faz até 5 perguntas (uma por vez), propõe 3 a 5 direções materialmente diferentes com prós, contras, esforço e risco em fatos, recomenda uma e pede a escolha. A escolha sai como comando `/lapidar` pronto. | `/brainstorming <ideia ou dúvida>` |
 | **lapidar** | Pega um pedido curto e vago e devolve uma task estruturada: contexto, objetivo, escopo, critérios de aceite verificáveis, abordagem, premissas explícitas. Vale para qualquer domínio: e-mail, apresentação, análise, plano, decisão, código. | `/lapidar <pedido>` |
 | **tdd** | Implementa código com teste primeiro. Lista de testes derivada dos critérios de aceite, ciclo RED (ver falhar pelo motivo certo) → GREEN mínimo → REFACTOR, fatias verticais ponta a ponta, testes honestos. Código escrito antes do teste é apagado. Bug começa por um teste que reproduz. | `/tdd <o que implementar>` ou automático ao executar uma task com código |
+| **conferir** | Prova que a entrega está pronta antes de dizer "pronto". Cada critério de aceite recebe evidência produzida na hora (comando e saída, trecho, contagem); reporta passou / falhou / não conferido sem arredondar; veredito binário PRONTO ou NÃO PRONTO. Vale para código, texto, apresentação, dados. | `/conferir` ou automático antes de concluir |
 
-O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → `/tdd` implementa.** Cada skill para onde a próxima começa: os critérios de aceite do `lapidar` são a lista de testes do `tdd`.
+O fluxo pensado: **`/brainstorming` → escolhe a direção → `/lapidar` → task pronta → `/tdd` implementa → `/conferir` prova.** Cada skill para onde a próxima começa: os critérios de aceite do `lapidar` são a lista de testes do `tdd` e a lista de provas do `conferir`.
 
 ### brainstorming
 
@@ -85,6 +86,26 @@ Três regras que não se negociam:
 
 O ciclo exige **ver o RED pelo motivo certo** (asserção que não bateu ou função que não existe; erro de sintaxe ou fixture faltando não conta) e trata teste que passa de primeira como suspeito. Vem com tabela de racionalizações, tabela de "quando travar", relatório final critério a critério, e referências de comandos para pytest, Jest e Vitest e de anti-padrões de teste.
 
+### conferir
+
+```
+/conferir
+/conferir o e-mail que você escreveu --corrigir
+```
+
+| Flag | Efeito |
+|------|--------|
+| (nenhuma) | Confere e reporta. Não corrige. |
+| `--corrigir` | Confere, corrige o que falhou, confere de novo. Até 3 rodadas. |
+
+O que a diferencia de "revisa aí":
+
+- **Evidência produzida agora.** "Rodei há cinco minutos" e "o arquivo de teste existe" não valem. Comando rodado, saída colada, trecho citado, número contado.
+- **Não conferido ≠ passou.** O que não deu para provar aparece com esse nome e o que seria preciso, e derruba o veredito.
+- **Critérios implícitos.** Escopo íntegro (diff lido inteiro), nada pela metade, nada deixado para trás, padrões da casa. Tabela por tipo de entrega em `references/checagens.md`.
+- **Veredito binário.** PRONTO ou NÃO PRONTO com o que falta. Sem "quase", sem "com ressalvas".
+- **Evidência independente do `tdd`.** O exemplo em `references/exemplos.md` mostra uma suíte verde com teste desonesto que só a chamada real pegou.
+
 ## Padrões da casa
 
 Commits em inglês, frase curta capitalizada, sem prefixo, sem rodapé de atribuição. PRs no mesmo formato. Código sem comentários que repetem o código. Tudo em [`docs/padroes.md`](docs/padroes.md).
@@ -94,7 +115,7 @@ O plugin faz cumprir, não só recomenda:
 | Hook | O que faz |
 |------|-----------|
 | `SessionStart` | Injeta `docs/padroes.md` no contexto de toda sessão |
-| `PreToolUse` (Bash) | Bloqueia `git commit` e `gh pr create/edit` com prefixo, minúscula inicial, mais de 72 caracteres, português ou rodapé de atribuição, e explica o motivo |
+| `PreToolUse` (Bash) | Bloqueia `git commit` e `gh pr create/edit` com prefixo, minúscula inicial, mais de 72 caracteres, português ou rodapé de atribuição, e explica o motivo. Testes em `hooks/test_check_commit.py` |
 
 ```
 oficina bloqueou o commit. Padrão: frase curta em inglês, capitalizada, sem prefixo, sem atribuição.
