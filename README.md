@@ -90,7 +90,7 @@ Três regras que não se negociam:
 - **Fatia vertical, não camada.** Cada ciclo entrega um comportamento inteiro, da entrada ao resultado observável.
 - **Teste honesto.** Antes de fechar um item: "se eu quebrar a implementação de propósito, este teste falha?". Tabela de sinais de teste desonesto (`toBeTruthy`, asserção sobre o mock, snapshot sem ler) com a troca certa.
 
-O ciclo exige **ver o RED pelo motivo certo** (asserção que não bateu ou função que não existe; erro de sintaxe ou fixture faltando não conta) e trata teste que passa de primeira como suspeito. Vem com tabela de racionalizações, tabela de "quando travar", relatório final critério a critério, e referências de comandos para pytest, Jest e Vitest e de anti-padrões de teste.
+O ciclo exige **ver o RED pelo motivo certo** (asserção que não bateu ou função que não existe; erro de sintaxe ou fixture faltando não conta) e trata teste que passa de primeira como suspeito. Vem com tabela de racionalizações, tabela de "quando travar", relatório final critério a critério, e referências de comandos por stack (pytest, Jest, Vitest) e de anti-padrões de teste.
 
 ### conferir
 
@@ -108,7 +108,7 @@ O que a diferencia de "revisa aí":
 
 - **Evidência produzida agora.** "Rodei há cinco minutos" e "o arquivo de teste existe" não valem. Comando rodado, saída colada, trecho citado, número contado.
 - **Não conferido ≠ passou.** O que não deu para provar aparece com esse nome e o que seria preciso, e derruba o veredito.
-- **Critérios implícitos.** Escopo íntegro (diff lido inteiro), nada pela metade, nada deixado para trás, padrões da casa. Tabela por tipo de entrega em `references/checagens.md`.
+- **Critérios implícitos.** Escopo íntegro (diff lido inteiro), nada pela metade, nada deixado para trás, padrões da casa. Tabela por tipo de entrega em `references/checagens/<tipo>.md`.
 - **Veredito binário.** PRONTO ou NÃO PRONTO com o que falta. Sem "quase", sem "com ressalvas".
 - **Evidência independente do `tdd`.** O exemplo em `references/exemplos.md` mostra uma suíte verde com teste desonesto que só a chamada real pegou.
 
