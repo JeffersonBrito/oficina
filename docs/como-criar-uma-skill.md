@@ -7,8 +7,10 @@ skills/
   nome-da-skill/
     SKILL.md            # obrigatório: frontmatter + instruções
     references/         # opcional: detalhe carregado sob demanda
-      tipos.md
-      exemplos.md
+      tipos/            # um arquivo por tipo; o modelo lê só o que a task pede
+        criar.md
+        corrigir.md
+      exemplos.md       # lido só em dúvida
 ```
 
 Copie `templates/SKILL-template.md` para `skills/<nome>/SKILL.md` e preencha.
