@@ -20,7 +20,7 @@ Para usar no **Codex** (OpenAI), veja [Usar no Codex](#usar-no-codex).
 | Skill | O que faz | Como usar |
 |-------|-----------|-----------|
 | **brainstorming** | Separa o problema da solução que veio junto, faz até 5 perguntas (uma por vez), propõe 3 a 5 direções materialmente diferentes com prós, contras, esforço e risco em fatos, recomenda uma e pede a escolha. A escolha sai como comando `/lapidar` pronto. | `/brainstorming <ideia ou dúvida>` |
-| **lapidar** | Pega um pedido curto e vago e devolve uma task estruturada: contexto, objetivo, escopo, critérios de aceite verificáveis, abordagem, premissas explícitas. Vale para qualquer domínio: e-mail, apresentação, análise, plano, decisão, código. | `/lapidar <pedido>` |
+| **lapidar** | Pega um pedido curto e vago e devolve uma task estruturada: objetivo, critérios de aceite verificáveis e como verificar, mais contexto, escopo e premissas explícitas quando mudam o trabalho. Vale para qualquer domínio: e-mail, apresentação, análise, plano, decisão, código. | `/lapidar <pedido>` |
 | **tdd** | Implementa código com teste primeiro. Lista de testes derivada dos critérios de aceite, ciclo RED (ver falhar pelo motivo certo) → GREEN mínimo → REFACTOR, fatias verticais ponta a ponta, testes honestos. Código escrito antes do teste é apagado. Bug começa por um teste que reproduz. | `/tdd <o que implementar>` ou automático ao executar uma task com código |
 | **conferir** | Prova que a entrega está pronta antes de dizer "pronto". Cada critério de aceite recebe evidência produzida na hora (comando e saída, trecho, contagem); reporta passou / falhou / não conferido sem arredondar; veredito binário PRONTO ou NÃO PRONTO. Vale para código, texto, apresentação, dados. | `/conferir` ou automático antes de concluir |
 | **depurar** | Investiga um bug até a causa raiz antes de corrigir. Congela o sintoma com evidência literal, reproduz, localiza por bissecção (tempo, caminho, dados), testa até 3 hipóteses com previsão, explica a causa em uma frase sem "acho", corrige pelo `tdd` e procura irmãos do bug. | `/depurar <sintoma>` ou automático em task `corrigir` |
@@ -69,7 +69,8 @@ Exemplos completos em [`skills/brainstorming/references/exemplos.md`](skills/bra
 
 O que ela faz de diferente de "pedir ao modelo para melhorar o prompt":
 
-- **Classifica o pedido** em sete tipos pelo resultado esperado: `criar`, `corrigir`, `transformar`, `investigar`, `decidir`, `planejar`, `comunicar`. Cada tipo exige seções próprias (um e-mail exige "Leitor" e "O que não dizer"; uma decisão exige "Critérios de comparação"; um bug exige "Reprodução" e "Hipóteses").
+- **Classifica o pedido** em sete tipos pelo resultado esperado: `criar`, `corrigir`, `transformar`, `investigar`, `decidir`, `planejar`, `comunicar`. Cada tipo traz as decisões próprias dele (um e-mail pede "Leitor" e, se houver, "O que não dizer"; uma decisão pede "Critérios de comparação"; um bug pede "Reprodução" e, só com evidência, "Hipóteses").
+- **Núcleo fixo, o resto sob demanda**: objetivo, critérios de aceite e como verificar entram sempre; escopo, restrições, abordagem e as demais seções só quando mudam o trabalho. Abordagem só aparece quando o caminho já foi decidido, para não prender quem executa a um caminho pior.
 - **Aterra no que existe**: conversa, arquivos, memória, repositório. A task cita nomes, números e caminhos reais, nunca "o documento relevante".
 - **Premissas com plano B**: cada suposição diz o que fazer se estiver errada. Pergunta ao usuário só quando leituras diferentes mudam o trabalho de verdade, no máximo três perguntas.
 - **Tamanho proporcional**: um e-mail vira task de 15 linhas, uma apresentação vira task de 60. Nunca infla.
