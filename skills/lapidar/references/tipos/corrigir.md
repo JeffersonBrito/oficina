@@ -5,7 +5,7 @@ Algo existe e está errado: bug, texto com problema, processo que falha, número
 Substituir "Contexto" por três seções:
 
 ### Sintoma
-O que acontece hoje, com a evidência: mensagem exata, print, valor errado, reclamação literal. Se o usuário não deu, a primeira etapa da Abordagem é obter.
+O que acontece hoje, com a evidência: mensagem exata, print, valor errado, reclamação literal. Se o usuário não deu, dizer que falta: o primeiro critério de aceite passa a ser "evidência literal do sintoma coletada".
 
 ### Esperado
 O que deveria acontecer. Uma frase.
@@ -16,7 +16,7 @@ Como fazer o problema aparecer de novo. Se não existe reprodução, o primeiro 
 Acrescentar:
 
 ### Hipóteses
-No máximo 3, cada uma com **como descartar** (o que olhar, rodar ou perguntar). Da mais provável para a menos.
+Só as que o aterramento sustenta (um log, um commit recente, um padrão no sintoma), no máximo 3, da mais provável para a menos, cada uma com a evidência e **como descartar**. Sem evidência, omitir a seção: hipótese chutada ancora quem investiga, e o `/depurar` levanta as dele depois de reproduzir.
 
 Regras fixas:
 - Restrição obrigatória: "não corrigir sem antes reproduzir".
